@@ -1338,43 +1338,69 @@ body {
     }
 }
 
-/* TAB NAVIGATION SYSTEM */
+/* TAB NAVIGATION SYSTEM (iOS-like Segmented Control) */
 .tab-navigation {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 25px;
+    background-color: #f1f5f9;
+    padding: 5px;
+    border-radius: var(--radius-md);
+    gap: 4px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
     animation: slideUp 0.6s ease-out;
 }
 
 .tab-btn {
-    padding: 12px 24px;
+    flex: 1;
+    justify-content: center;
+    padding: 10px 16px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 700;
     color: var(--light-txt);
-    background-color: var(--card-bg);
-    border: 1.5px solid var(--border-color);
-    border-radius: var(--radius-md);
+    background: none;
+    border: none;
+    border-radius: calc(var(--radius-md) - 4px);
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
+    box-shadow: none;
 }
 
 .tab-btn:hover {
     color: var(--primary);
-    border-color: rgba(179, 29, 29, 0.3);
-    background-color: #fffafb;
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
 .tab-btn.active {
-    color: #ffffff;
-    background-color: var(--primary);
-    border-color: var(--primary);
-    box-shadow: 0 4px 12px rgba(179, 29, 29, 0.2);
+    color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Watermark for signature pad */
+.signature-pad-body::before {
+    content: 'Ký tên tại đây';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #e2e8f0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    pointer-events: none;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: opacity var(--transition-fast);
+}
+
+.signature-pad-body.signed::before {
+    opacity: 0;
 }
 
 /* SEARCH AREA DESIGN */
@@ -1586,32 +1612,166 @@ body {
     line-height: 1.5;
 }
 
-/* RESPONSIVE EXTRA FOR SEARCH */
+/* UNIFIED RESPONSIVE DESIGN FOR TABLETS AND MOBILE PHONES */
 @media (max-width: 768px) {
-    .tab-navigation {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        margin-bottom: 20px;
+    .container {
+        padding: 15px 10px;
+        gap: 15px;
     }
     
-    .tab-btn {
+    .header {
+        padding: 25px 15px;
+    }
+    
+    .header-text h3 {
+        font-size: 0.8rem;
+    }
+    
+    .header-text h1 {
+        font-size: 1.35rem;
+        margin: 6px 0;
+    }
+    
+    .header-text h2 {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .directive-box {
+        padding: 10px 12px;
+        font-size: 0.78rem;
+    }
+    
+    .stepper {
+        padding: 12px 10px;
+    }
+    
+    .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .step-label {
+        font-size: 0.72rem;
+    }
+    
+    .form-step {
+        padding: 20px 15px;
+    }
+    
+    .step-title-wrapper h2 {
+        font-size: 1.05rem;
+    }
+    
+    .input-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    .input-group.full-width {
+        grid-column: span 1;
+    }
+    
+    /* Stepper text layout compacting for mobile */
+    @media (max-width: 500px) {
+        .step-label {
+            display: none; /* Hide labels, show numbers only to prevent overflow */
+        }
+        .stepper {
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 0;
+        }
+        .step {
+            flex-direction: column;
+            gap: 0;
+        }
+        .step-line {
+            width: 40px;
+            margin: 0 5px;
+        }
+    }
+    
+    .checkbox-cards {
+        gap: 10px;
+    }
+    
+    .checkbox-card {
+        padding: 12px 15px;
+        gap: 12px;
+    }
+    
+    .checkbox-label strong {
+        font-size: 0.88rem;
+    }
+    
+    .checkbox-label span {
+        font-size: 0.76rem;
+    }
+    
+    .signature-section-wrapper {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .signature-pad-body {
+        height: 160px;
+    }
+    
+    .signature-pad-body::before {
+        font-size: 1rem;
+    }
+    
+    .form-navigation {
+        display: flex;
+        gap: 15px;
+        width: 100%;
+        padding-top: 20px;
+    }
+    
+    .form-navigation .btn {
+        flex: 1;
+        justify-content: center;
+        padding: 12px 15px;
+        font-size: 0.88rem;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        padding: 15px;
+    }
+    
+    .modal-body {
+        padding: 10px 15px 20px 15px;
+    }
+    
+    .modal-footer {
+        padding: 15px;
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .modal-footer .btn {
         width: 100%;
         justify-content: center;
     }
     
+    /* Search Results mobile adjustment */
     .search-card {
         padding: 25px 15px;
     }
     
     .search-form-group {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 12px;
     }
     
     .btn-search {
         width: 100%;
         justify-content: center;
+        padding: 14px 20px;
     }
     
     .result-body {
@@ -1621,7 +1781,7 @@ body {
     
     .result-header {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         align-items: flex-start;
     }
     

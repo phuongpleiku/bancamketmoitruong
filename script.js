@@ -245,6 +245,7 @@ function startDrawing(e) {
     drawing = true;
     isSigned = true;
     document.getElementById('sig-error').style.display = 'none';
+    canvas.parentNode.classList.add('signed');
     
     const pos = getMousePos(canvas, e);
     ctx.beginPath();
@@ -269,6 +270,7 @@ function clearSignature() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     isSigned = false;
     signatureInput.value = '';
+    canvas.parentNode.classList.remove('signed');
 }
 
 function getMousePos(canvasDom, mouseEvent) {
