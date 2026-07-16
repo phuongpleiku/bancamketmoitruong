@@ -174,11 +174,12 @@ body {
 }
 
 .header-text h2 {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--dark-txt);
-    max-width: 650px;
+    max-width: 720px;
     margin: 0 auto;
+    line-height: 1.5;
 }
 
 .directive-box {
