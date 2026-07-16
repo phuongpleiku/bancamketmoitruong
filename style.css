@@ -38,6 +38,11 @@
     padding: 0;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
@@ -47,7 +52,6 @@ body {
     display: flex;
     justify-content: center;
     position: relative;
-    overflow-x: hidden;
 }
 
 /* Background Glowing Orbs for Modern Premium Aesthetics */
@@ -1054,7 +1058,7 @@ body {
 
 /* OFF-SCREEN RENDER CONTAINER FOR PRINTING (A4 SIZE AND FONTS) */
 #pdf-document-wrapper {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 100vw;
     width: 794px; /* standard A4 width at 96 DPI */
