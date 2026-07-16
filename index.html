@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Cam Kết Xây Dựng Môi Trường Du Lịch Văn Minh - Phường Pleiku</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf.js CDN library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-decorations">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="national-emblem-placeholder">
+                <i class="fa-solid fa-hotel emblem-icon"></i>
+            </div>
+            <div class="header-text">
+                <h3>ỦY BAN NHÂN DÂN PHƯỜNG PLEIKU</h3>
+                <div class="divider-line"></div>
+                <h1>BẢN CAM KẾT</h1>
+                <h2>Thực hiện các quy định về xây dựng môi trường du lịch văn minh, an toàn, thân thiện trên địa bàn phường Pleiku</h2>
+            </div>
+            <div class="directive-box">
+                <p><i class="fa-solid fa-file-invoice"></i> Thực hiện Chỉ thị số 14/CT-UBND ngày 07 tháng 7 năm 2026 của Chủ tịch UBND tỉnh Gia Lai về chấn chỉnh, nâng cao chất lượng phục vụ du khách, xây dựng môi trường du lịch văn minh, an toàn, thân thiện trên địa bàn tỉnh Gia Lai.</p>
+            </div>
+        </header>
+
+        <!-- Main Tab Navigation -->
+        <div class="tab-navigation">
+            <button type="button" class="tab-btn active" id="tab-register-btn" onclick="switchMainTab('register')">
+                <i class="fa-solid fa-file-signature"></i> Đăng ký cam kết mới
+            </button>
+            <button type="button" class="tab-btn" id="tab-search-btn" onclick="switchMainTab('search')">
+                <i class="fa-solid fa-magnifying-glass"></i> Tra cứu & Tải lại cam kết
+            </button>
+        </div>
+
+        <!-- REGISTRATION SECTION CONTAINER -->
+        <div id="register-container">
+            <!-- Stepper Navigation -->
+            <div class="stepper">
+                <div class="step active" id="step-indicator-1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Thông tin cơ sở</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step-indicator-2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Nội dung cam kết</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step-indicator-3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Ký tên & Xác nhận</span>
+                </div>
+            </div>
+
+            <!-- Form Wrapper -->
+            <form id="commitment-form" class="card-form">
+                <!-- Hidden inputs for system use -->
+                <input type="hidden" id="commitment_date" name="Date">
+                <input type="hidden" id="signature_image" name="Signature">
+                <input type="hidden" id="pdf_base64" name="PdfFile"> <!-- Stores generated PDF string for Drive upload -->
+
+                <!-- STEP 1: BUSINESS INFORMATION -->
+                <div class="form-step active" id="step-1">
+                    <div class="step-title-wrapper">
+                        <span class="step-icon"><i class="fa-solid fa-store"></i></span>
+                        <h2>Bước 1: Thông tin doanh nghiệp / cơ sở / hộ kinh doanh</h2>
+                    </div>
+                    
+                    <div class="input-grid">
+                        <!-- Business Name -->
+                        <div class="input-group">
+                            <input type="text" id="business_name" name="BusinessName" required placeholder=" ">
+                            <label for="business_name"><i class="fa-solid fa-shop"></i> Tên doanh nghiệp/cơ sở/hộ kinh doanh *</label>
+                            <span class="error-msg">Vui lòng điền tên cơ sở.</span>
+                        </div>
+
+                        <!-- Business Type -->
+                        <div class="input-group">
+                            <select id="business_type" name="BusinessType" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="Cơ sở lưu trú (Khách sạn, Nhà nghỉ, Homestay...)">Cơ sở lưu trú (Khách sạn, Nhà nghỉ, Homestay...)</option>
+                                <option value="Cơ sở ăn uống (Nhà hàng, Quán ăn, Quán cafe...)">Cơ sở ăn uống (Nhà hàng, Quán ăn, Quán cafe...)</option>
+                                <option value="Điểm vui chơi, giải trí, mua sắm">Điểm vui chơi, giải trí, mua sắm</option>
+                                <option value="Dịch vụ vận tải du lịch (Xe điện, Taxi, Cho thuê xe...)">Dịch vụ vận tải du lịch (Xe điện, Taxi...)</option>
+                                <option value="Hộ kinh doanh khác">Hộ kinh doanh khác</option>
+                            </select>
+                            <label for="business_type" class="select-label"><i class="fa-solid fa-tag"></i> Loại hình kinh doanh *</label>
+                            <span class="error-msg">Vui lòng chọn loại hình kinh doanh.</span>
+                        </div>
+
+                        <!-- Representative -->
+                        <div class="input-group">
+                            <input type="text" id="representative" name="Representative" required placeholder=" ">
+                            <label for="representative"><i class="fa-solid fa-user-tie"></i> Người đại diện *</label>
+                            <span class="error-msg">Vui lòng điền tên người đại diện.</span>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="input-group">
+                            <input type="tel" id="phone" name="Phone" required pattern="[0-9]{9,11}" placeholder=" ">
+                            <label for="phone"><i class="fa-solid fa-phone"></i> Điện thoại liên hệ *</label>
+                            <span class="error-msg">Vui lòng điền số điện thoại hợp lệ (9 - 11 chữ số).</span>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="input-group full-width">
+                            <input type="text" id="address" name="Address" required placeholder=" ">
+                            <label for="address"><i class="fa-solid fa-location-dot"></i> Địa chỉ cơ sở kinh doanh *</label>
+                            <span class="error-msg">Vui lòng điền địa chỉ.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <div></div> <!-- spacer -->
+                        <button type="button" class="btn btn-next" onclick="nextStep(1)">Tiếp tục <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: COMMITMENT CONTENTS -->
+                <div class="form-step" id="step-2">
+                    <div class="step-title-wrapper">
+                        <span class="step-icon"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                        <h2>Bước 2: Nội dung cam kết thực hiện quy định</h2>
+                    </div>
+
+                    <!-- 3K Section -->
+                    <div class="commitment-section">
+                        <h3 class="section-title text-red"><i class="fa-solid fa-ban"></i> Điều 2. Cam kết thực hiện thông điệp du lịch "3K"</h3>
+                        <p class="section-desc">Chúng tôi tự nguyện cam kết thực hiện nghiêm các nội dung sau:</p>
+                        <div class="checkbox-cards">
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="k1" name="K1_KhongNangGia" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>Không nâng giá, ép giá</strong>
+                                    <span>Niêm yết giá rõ ràng và bán đúng giá niêm yết.</span>
+                                </span>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="k2" name="K2_KhongCheoKeo" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>Không tranh giành, chèo kéo khách</strong>
+                                    <span>Tạo môi trường cạnh tranh lành mạnh, lịch thiệp.</span>
+                                </span>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="k3" name="K3_KhongONhiem" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>Không gây ô nhiễm tiếng ồn, không xả rác</strong>
+                                    <span>Giữ gìn vệ sinh và không phát loa đài quá mức quy định.</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="error-msg checklist-error" id="k-error">Bạn phải tích chọn cam kết cả 3 nội dung "3K".</span>
+                    </div>
+
+                    <!-- 3A Section -->
+                    <div class="commitment-section">
+                        <h3 class="section-title text-green"><i class="fa-solid fa-shield-halved"></i> Điều 3. Cam kết thực hiện thông điệp "3A"</h3>
+                        <p class="section-desc">Chúng tôi tự nguyện cam kết bảo đảm:</p>
+                        <div class="checkbox-cards">
+                            <label class="checkbox-card card-green">
+                                <input type="checkbox" id="a1" name="A1_AnToanGiaoThong" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>An toàn giao thông</strong>
+                                    <span>Không lấn chiếm lòng đường, sắp xếp xe của khách gọn gàng.</span>
+                                </span>
+                            </label>
+                            <label class="checkbox-card card-green">
+                                <input type="checkbox" id="a2" name="A2_AnToanVeSinh" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>An toàn vệ sinh thực phẩm</strong>
+                                    <span>Sử dụng thực phẩm nguồn gốc rõ ràng, bảo đảm quy trình chế biến sạch.</span>
+                                </span>
+                            </label>
+                            <label class="checkbox-card card-green">
+                                <input type="checkbox" id="a3" name="A3_AnToanTinhMang" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>An toàn tính mạng, sức khỏe và tài sản</strong>
+                                    <span>Chủ động bảo vệ và phòng chống cháy nổ tại cơ sở.</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="error-msg checklist-error" id="a-error">Bạn phải tích chọn cam kết cả 3 nội dung "3A".</span>
+                    </div>
+
+                    <!-- Other Regulations Toggle Card -->
+                    <div class="accordion-item">
+                        <button type="button" class="accordion-header" onclick="toggleAccordion()">
+                            <span><i class="fa-solid fa-scale-balanced"></i> Đọc chi tiết các quy định pháp luật (Điều 1, 4, 5, 6, 7)</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" id="accordion-content">
+                            <div class="rules-document">
+                                <div class="rule-block">
+                                    <h4>Điều 1. Chấp hành quy định pháp luật</h4>
+                                    <p>1. Chấp hành nghiêm các quy định của pháp luật trong hoạt động kinh doanh; bảo đảm các giấy phép, chứng nhận còn hiệu lực.</p>
+                                    <p>2. Chấp hành các quy định về an ninh, trật tự, phòng cháy chữa cháy, an toàn thực phẩm, bảo vệ môi trường và các quy định có liên quan.</p>
+                                </div>
+                                <div class="rule-block">
+                                    <h4>Điều 4. Cam kết về chất lượng dịch vụ</h4>
+                                    <p>1. Niêm yết giá đầy đủ, rõ ràng theo quy định.</p>
+                                    <p>2. Bán đúng giá niêm yết; không tự ý tăng giá vào dịp lễ, tết hoặc mùa cao điểm.</p>
+                                    <p>3. Không kinh doanh hàng giả, hàng kém chất lượng, hàng không rõ nguồn gốc.</p>
+                                    <p>4. Phục vụ đúng chất lượng đã công bố; bảo đảm quyền lợi hợp pháp của khách hàng.</p>
+                                    <p>5. Chủ động tiếp nhận và giải quyết các phản ánh, kiến nghị của khách du lịch.</p>
+                                </div>
+                                <div class="rule-block">
+                                    <h4>Điều 5. Cam kết về văn hóa ứng xử</h4>
+                                    <p>1. Giao tiếp lịch sự, văn minh, thân thiện, tôn trọng du khách.</p>
+                                    <p>2. Không phân biệt đối xử với khách trong và ngoài nước.</p>
+                                    <p>3. Không có hành vi chèo kéo, ép buộc khách sử dụng dịch vụ.</p>
+                                    <p>4. Chủ động hướng dẫn, hỗ trợ du khách khi cần thiết.</p>
+                                </div>
+                                <div class="rule-block">
+                                    <h4>Điều 6. Cam kết về môi trường</h4>
+                                    <p>1. Thực hiện thu gom, phân loại rác thải đúng quy định.</p>
+                                    <p>2. Giữ gìn vệ sinh khu vực kinh doanh xanh - sạch - đẹp.</p>
+                                    <p>3. Không lấn chiếm vỉa hè, lòng đường gây mất mỹ quan và cản trở giao thông.</p>
+                                    <p>4. Thực hiện các biện pháp giảm tiếng ồn theo quy định.</p>
+                                </div>
+                                <div class="rule-block">
+                                    <h4>Điều 7. Trách nhiệm phối hợp</h4>
+                                    <p>1. Chấp hành việc kiểm tra của cơ quan nhà nước có thẩm quyền.</p>
+                                    <p>2. Kịp thời cung cấp thông tin khi được yêu cầu.</p>
+                                    <p>3. Phối hợp tuyên truyền, quảng bá hình ảnh phường Pleiku là điểm đến văn minh, thân thiện và mến khách.</p>
+                                    <p>4. Kịp thời phản ánh các hành vi vi phạm làm ảnh hưởng đến môi trường du lịch trên địa bàn.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-prev" onclick="prevStep(1)"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep(2)">Tiếp tục <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: CONFIRM & SIGN -->
+                <div class="form-step" id="step-3">
+                    <div class="step-title-wrapper">
+                        <span class="step-icon"><i class="fa-solid fa-signature"></i></span>
+                        <h2>Bước 3: Xác nhận cam kết & Ký tên điện tử</h2>
+                    </div>
+
+                    <div class="confirm-declaration-box">
+                        <h3 class="section-title"><i class="fa-solid fa-gavel"></i> Điều 8. Cam kết thực hiện</h3>
+                        <p>Chúng tôi hoàn toàn tự nguyện ký bản cam kết này và chịu trách nhiệm trước pháp luật nếu vi phạm các nội dung đã cam kết. Nếu vi phạm, chúng tôi chấp hành việc nhắc nhở, xử lý vi phạm hành chính hoặc các hình thức xử lý khác theo quy định của pháp luật.</p>
+                    </div>
+
+                    <!-- Sign details -->
+                    <div class="signature-section-wrapper">
+                        <div class="signature-pad-container">
+                            <label class="pad-label"><i class="fa-solid fa-pen-nib"></i> Người đại diện ký tên vào khung dưới đây *</label>
+                            <div class="signature-pad-body">
+                                <canvas id="signature-canvas"></canvas>
+                            </div>
+                            <div class="signature-pad-footer">
+                                <button type="button" class="btn-clear-sig" id="btn-clear-signature"><i class="fa-solid fa-eraser"></i> Xóa ký lại</button>
+                            </div>
+                            <span class="error-msg" id="sig-error">Vui lòng thực hiện ký tên vào khung.</span>
+                        </div>
+
+                        <div class="signee-name-wrapper">
+                            <!-- Signee Name -->
+                            <div class="input-group">
+                                <input type="text" id="signee_name" name="SigneeName" required placeholder=" ">
+                                <label for="signee_name"><i class="fa-solid fa-file-signature"></i> Họ và tên người ký cam kết *</label>
+                                <span class="error-msg">Vui lòng điền họ tên người ký.</span>
+                            </div>
+
+                            <!-- General Agreement Checkbox -->
+                            <label class="checkbox-card agree-checkbox-card">
+                                <input type="checkbox" id="agree_terms" name="AgreeTerms" required>
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">
+                                    <strong>Tôi hoàn toàn tự nguyện và đồng ý với các nội dung trên *</strong>
+                                </span>
+                            </label>
+                            <span class="error-msg checklist-error" id="agree-error">Bạn cần tích chọn xác nhận cam kết tự nguyện.</span>
+                        </div>
+                    </div>
+
+                    <!-- Submission status indicator -->
+                    <div class="form-submit-status" id="submit-status">
+                        <div class="spinner"></div>
+                        <span id="submit-status-text">Đang thiết lập biên bản PDF và gửi dữ liệu về hệ thống...</span>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-prev" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                        <button type="submit" class="btn btn-submit" id="btn-submit-form"><i class="fa-solid fa-paper-plane"></i> Gửi Bản Cam Kết</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- SEARCH SECTION CONTAINER (Hidden by default) -->
+        <div id="search-container" style="display: none;">
+            <div class="search-card">
+                <div class="step-title-wrapper">
+                    <span class="step-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <h2>Tra cứu thông tin cam kết đã ký</h2>
+                </div>
+                <p class="search-desc">Nhập số điện thoại đăng ký của cơ sở kinh doanh để kiểm tra dữ liệu và tải lại bản cam kết PDF chính thức từ lưu trữ.</p>
+                
+                <div class="search-form-group">
+                    <div class="input-group">
+                        <input type="tel" id="search_phone" placeholder=" " pattern="[0-9]{9,11}">
+                        <label for="search_phone"><i class="fa-solid fa-phone"></i> Số điện thoại tra cứu *</label>
+                    </div>
+                    <button type="button" class="btn btn-search" id="btn-search-commit" onclick="searchCommitment()"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</button>
+                </div>
+                
+                <!-- Search status loading -->
+                <div class="search-status" id="search-status">
+                    <div class="spinner"></div>
+                    <span>Đang tìm kiếm thông tin trên hệ thống...</span>
+                </div>
+                
+                <!-- Search results container -->
+                <div class="search-results" id="search-results-box">
+                    <!-- Dynamic search result item(s) will render here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- SUCCESS MODAL -->
+        <div class="modal" id="success-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="success-icon-wrapper">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h2>Gửi Cam Kết Thành Công!</h2>
+                    <p class="modal-subtitle">Hệ thống đã ghi nhận bản cam kết của cơ sở kinh doanh.</p>
+                    
+                    <div class="receipt-box">
+                        <div class="receipt-row">
+                            <span>Tên cơ sở:</span>
+                            <strong id="receipt-business-name">N/A</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Người đại diện:</span>
+                            <strong id="receipt-representative">N/A</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Thời gian cam kết:</span>
+                            <strong id="receipt-date">N/A</strong>
+                        </div>
+                    </div>
+                    
+                    <p class="receipt-note"><i class="fa-solid fa-circle-info"></i> Bản cam kết đã được xuất thành biên bản PDF ký số và lưu trữ trên hệ thống của UBND Phường Pleiku.</p>
+                </div>
+                <div class="modal-footer" style="gap: 12px;">
+                    <button type="button" class="btn btn-pdf" id="btn-download-pdf"><i class="fa-solid fa-file-pdf"></i> Tải Biên Bản (PDF)</button>
+                    <button type="button" class="btn btn-success-close" onclick="closeSuccessModal()">Đóng cửa sổ</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="system-footer">
+            <p>&copy; 2026 UBND Phường Pleiku - Thành phố Pleiku - Tỉnh Gia Lai</p>
+            <p>Hệ thống Đăng ký và Quản lý Cam kết Du lịch Văn minh trực tuyến</p>
+        </footer>
+    </div>
+
+    <!-- HIDDEN PDF DOCUMENT FOR GENERATION (Off-screen render) -->
+    <div id="pdf-document-wrapper">
+        <div id="pdf-document">
+            <!-- PAGE 1 -->
+            <div class="pdf-page">
+                <div class="pdf-header">
+                    <span class="pdf-national-agency">ỦY BAN NHÂN DÂN PHƯỜNG PLEIKU</span>
+                    <div class="pdf-header-divider"></div>
+                </div>
+                
+                <div class="pdf-title-container">
+                    <h1 class="pdf-main-title">BẢN CAM KẾT</h1>
+                    <h2 class="pdf-sub-title">Thực hiện các quy định về xây dựng môi trường du lịch văn minh, an toàn, thân thiện trên địa bàn phường Pleiku</h2>
+                </div>
+                
+                <p class="pdf-indent-text pdf-justify-text pdf-italic-text">
+                    Thực hiện Chỉ thị số 14/CT-UBND ngày 07 tháng 7 năm 2026 của Chủ tịch UBND tỉnh Gia Lai về chấn chỉnh, nâng cao chất lượng phục vụ du khách, xây dựng môi trường du lịch văn minh, an toàn, thân thiện trên địa bàn tỉnh Gia Lai.
+                </p>
+                
+                <p class="pdf-indent-text pdf-justify-text">
+                    Hôm nay, ngày <span id="pdf-day">......</span> tháng <span id="pdf-month">......</span> năm 2026, Doanh nghiệp/cơ sở/hộ kinh doanh thực hiện cam kết với Ủy ban nhân dân phường Pleiku về xây dựng môi trường du lịch văn minh, an toàn, thân thiện.
+                </p>
+                
+                <div class="pdf-info-fields">
+                    <p>Tên doanh nghiệp/cơ sở/hộ kinh doanh: <strong id="pdf-business-name">......................................................................................</strong></p>
+                    <p>Loại hình kinh doanh: <span id="pdf-business-type">......................................................................................</span></p>
+                    <p>Địa chỉ: <span id="pdf-address">......................................................................................</span></p>
+                    <p>Người đại diện: <strong id="pdf-representative">......................................................................................</strong></p>
+                    <p>Điện thoại: <span id="pdf-phone">......................................................................................</span></p>
+                </div>
+                
+                <p class="pdf-bold-text" style="margin-top: 15px; margin-bottom: 10px;">UBND phường chúng tôi tự nguyện cam kết thực hiện các nội dung sau:</p>
+                
+                <div class="pdf-article">
+                    <h3>Điều 1. Chấp hành quy định pháp luật</h3>
+                    <p>1. Chấp hành nghiêm các quy định của pháp luật trong hoạt động kinh doanh; bảo đảm các giấy phép, chứng nhận còn hiệu lực.</p>
+                    <p>2. Chấp hành các quy định về an ninh, trật tự, phòng cháy chữa cháy, an toàn thực phẩm, bảo vệ môi trường và các quy định có liên quan.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 2. Cam kết thực hiện thông điệp du lịch "3K"</h3>
+                    <p class="pdf-italic-text" style="margin-bottom: 4px;">Thực hiện nghiêm:</p>
+                    <p class="pdf-checkbox-checked">&#9745; Không nâng giá, ép giá.</p>
+                    <p class="pdf-checkbox-checked">&#9745; Không tranh giành, chèo kéo khách.</p>
+                    <p class="pdf-checkbox-checked">&#9745; Không gây ô nhiễm tiếng ồn, không xả rác gây mất mỹ quan.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 3. Cam kết thực hiện thông điệp "3A"</h3>
+                    <p class="pdf-italic-text" style="margin-bottom: 4px;">Bảo đảm:</p>
+                    <p class="pdf-checkbox-checked">&#9745; An toàn giao thông.</p>
+                    <p class="pdf-checkbox-checked">&#9745; An toàn vệ sinh thực phẩm.</p>
+                    <p class="pdf-checkbox-checked">&#9745; An toàn tính mạng, sức khỏe và tài sản của khách du lịch.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 4. Cam kết về chất lượng dịch vụ</h3>
+                    <p>1. Niêm yết giá đầy đủ, rõ ràng theo quy định.</p>
+                    <p>2. Bán đúng giá niêm yết; không tự ý tăng giá vào dịp lễ, tết hoặc mùa cao điểm.</p>
+                    <p>3. Không kinh doanh hàng giả, hàng kém chất lượng, hàng không rõ nguồn gốc.</p>
+                </div>
+            </div>
+            
+            <!-- PAGE 2 -->
+            <div class="pdf-page pdf-page-2">
+                <div class="pdf-article" style="margin-top: 20px;">
+                    <p>4. Phục vụ đúng chất lượng đã công bố; bảo đảm quyền lợi hợp pháp của khách hàng.</p>
+                    <p>5. Chủ động tiếp nhận và giải quyết các phản ánh, kiến nghị của khách du lịch.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 5. Cam kết về văn hóa ứng xử</h3>
+                    <p>1. Giao tiếp lịch sự, văn minh, thân thiện, tôn trọng du khách.</p>
+                    <p>2. Không phân biệt đối xử với khách trong và ngoài nước.</p>
+                    <p>3. Không có hành vi chèo kéo, ép buộc khách sử dụng dịch vụ.</p>
+                    <p>4. Chủ động hướng dẫn, hỗ trợ du khách khi cần thiết.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 6. Cam kết về môi trường</h3>
+                    <p>1. Thực hiện thu gom, phân loại rác thải đúng quy định.</p>
+                    <p>2. Giữ gìn vệ sinh khu vực kinh doanh xanh - sạch - đẹp.</p>
+                    <p>3. Không lấn chiếm vỉa hè, lòng đường gây mất mỹ quan và cản trở giao thông.</p>
+                    <p>4. Thực hiện các biện pháp giảm tiếng ồn theo quy định.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 7. Trách nhiệm phối hợp</h3>
+                    <p>1. Chấp hành việc kiểm tra của cơ quan nhà nước có thẩm quyền.</p>
+                    <p>2. Kịp thời cung cấp thông tin khi được yêu cầu.</p>
+                    <p>3. Phối hợp tuyên truyền, quảng bá hình ảnh phường Pleiku là điểm đến văn minh, thân thiện và mến khách.</p>
+                    <p>4. Kịp thời phản ánh các hành vi vi phạm làm ảnh hưởng đến môi trường du lịch trên địa bàn.</p>
+                </div>
+                
+                <div class="pdf-article">
+                    <h3>Điều 8. Cam kết thực hiện</h3>
+                    <p class="pdf-indent-text">Chúng tôi hoàn toàn tự nguyện ký bản cam kết này và chịu trách nhiệm trước pháp luật nếu vi phạm các nội dung đã cam kết.</p>
+                    <p class="pdf-indent-text">Nếu vi phạm, chúng tôi chấp hành việc nhắc nhở, xử lý vi phạm hành chính hoặc các hình thức xử lý khác theo quy định của pháp luật.</p>
+                </div>
+                
+                <div class="pdf-signature-section">
+                    <div class="pdf-signature-block">
+                        <span class="pdf-sig-title">ĐẠI DIỆN CƠ SỞ KÝ TÊN</span>
+                        <div class="pdf-sig-img-container">
+                            <img id="pdf-signature-img" src="" alt="Chữ ký">
+                        </div>
+                        <span id="pdf-signee-name" class="pdf-sig-name">.........................................</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
